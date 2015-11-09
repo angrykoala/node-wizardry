@@ -21,10 +21,10 @@
 class: center,middle
 Brujería con Node.js
 ====================
-_Andrés Ortiz Corrales_    
+_Andrés Ortiz Corrales_
 _@demiurgosoft_
 
-![Cool Koala](images/cool_koala.jpg)    
+![Cool Koala](images/cool_koala.jpg)
 ![CC_by_sa](images/cc_license.png)
 ---
 ## <center> Qué es Node.js? </center>
@@ -62,7 +62,7 @@ _Small chat service_
 	* `sudo apt-get install nodejs`
 
 * **Version 4.2.2 (LTS)**
-	* `curl -sL https://deb.nodesource.com/setup | sudo bash -`    
+	* `curl -sL https://deb.nodesource.com/setup | sudo bash -`
 `sudo apt-get install nodejs`
 
 **Windows (4.2.2/5.0)**
@@ -78,7 +78,7 @@ Descargar instalador:
 
 ---
 ## Primeros pasos
-**Crear Proyecto** 
+**Crear Proyecto**
 * `npm init` en la raiz del proyecto para general _package.json_
 	* Los campos se rellenerán automáticamente si es posible
 	* **License**: GPL-3.0,ASC,MIT...
@@ -116,7 +116,7 @@ Repositorio github (repository,web,bugs...)
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js" 
+    "start": "node server.js"
   },
   "author": "demiurgosoft <demiurgosoft@hotmail.com>",
   "license": "GPL-3.0",
@@ -172,9 +172,9 @@ _server.js_
 **npm** (_Node Package Manager_) nos permite gestionar nuestras aplicaciones de Node.js y sus dependencias
 
 ¿Necesitamos express? ¿Tenemos un _package.json_?
-* `npm install --save express` 
+* `npm install --save express`
 	* npm install instalará express en _node_modules_ automaticamente
-	* La opción --save añadriá a _package.json_ la libreria express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos    
+	* La opción --save añadriá a _package.json_ la libreria express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos
 ```Json
 	 "dependencies": {
         "express": "^4.13.3"
@@ -183,23 +183,23 @@ _server.js_
 
 ---
 ## Primeros pasos: Ejecutar el ejemplo
-* `node server.js` Ejecutará nuestro servidor de ejemplo:    
-```    
-	$ node server.js 
+* `node server.js` Ejecutará nuestro servidor de ejemplo:
+```
+	$ node server.js
 	Magic happens in port 9090
 ```
-	
-* Desde cualquier navegador: `localhost:9090`    
+
+* Desde cualquier navegador: `localhost:9090`
 	`Hello Chat`
-	
+
 ----
 Ejecutar `node` nos permitirá acceder a un intérprete de Node.js, muy útil para probar cosas
 
 
 ---
 ## Servir un fichero Html
-**Vamos a darle más gracia a nuestra web!**    
-En `public/` crearemos un fichero _client.html_ (recordemos que ahí van nuestros "recursos")
+**Vamos a darle más gracia a nuestra web!**
+En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros "recursos")
 
 ```html
 <!DOCTYPE html>
@@ -209,13 +209,14 @@ En `public/` crearemos un fichero _client.html_ (recordemos que ahí van nuestro
     <title>MyChat</title>
 </head>
 <body>
+    <center> <!-- Not good, i know, use css for this!! -->
     <h1>My Chat</h1>
     <p>Node Wizardryc</p>
-
+    </center>
 </body>
 </html>
 ```
-_client.html_
+_index.html_
 
 ???
 ```
@@ -225,35 +226,35 @@ _client.html_
 	|-node_modules/
 		|-express/
 	|-public/
-		|-client.html
+		|-index.html
 ```
 
 ---
 ## Servir un fichero Html
 * Para devolver los recursos de la carpeta public con express, añadimos:
-```javascript     
+```javascript
 app.use(express.static('public'))
 ```
-* En el navegador: `localhost:9090/client.html` nos devolverá nuestro fichero html
-* En la función _app.get_ que creamos al principio podemos, además redireccionar a nuestro fichero cliente con `res.redirect('/client.html')`
+* En el navegador: `localhost:9090/index.html` nos devolverá nuestro fichero html
+* En la función _app.get_ que creamos al principio podemos, además redireccionar a nuestro fichero cliente con `res.redirect('/index.html')`
 
 ```javascript
 //requires and stuff
 app.use(express.static('public')); //makes public folder as root of resources
 
 app.get('/', function(req, res) {
-	res.redirect('/client.html'); //redirects to client.html
+	res.redirect('/index.html'); //redirects to index.html
 });
 //more code and stuff here
 ```
 _server.js_
 
 ???
-* Con redirect, `localhost:9090/` nos llevará a `localhost:9090/client.html`
+* Con redirect, `localhost:9090/` nos llevará a `localhost:9090/index.html`
 
 ---
 class:center
-Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?    
+Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?
 ![Scared Koala Here](images/scared_koala.png)
 
 ---
@@ -303,14 +304,14 @@ Hay más eventos como `reconnect` o `error` entre otros
 ## Socket.io en el servidor
 
 En primer lugar, necesitaremos la libreria 'socket.io', por lo que la incluiremos al igual que hicimos con express:
-1. `$ npm install --save socket.io` para descargar e instalar socket.io en el proyecto    
+1. `$ npm install --save socket.io` para descargar e instalar socket.io en el proyecto
 ```js
 	  "dependencies": {
       "express": "^4.13.3",
       "socket.io": "^1.3.7"
 	  }
 ```
-2. `var io=require('socket.io')(http)` al comienzo de _server.js_, con esto asignamos los websockets a nuestro servidor http   
+2. `var io=require('socket.io')(http)` al comienzo de _server.js_, con esto asignamos los websockets a nuestro servidor http
 
 ---
 ## Socket.io en el servidor
@@ -350,14 +351,13 @@ Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectar
 
 Por suerte, el cliente también ejecuta _Javascript_, por tanto, programar con Socket.io en el cliente es igual
 
-* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando la "web cliente", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en client.html:
+* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando la "web cliente", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
 ```html
 </body>
 <script src="/socket.io/socket.io.js"></script>
 </html>
 ```
-_client.html_
-
+_index.html_
 
 
 ???
@@ -365,7 +365,191 @@ _client.html_
 
 Ademas de socket.io-client para javascript, existen multitud de librerias cliente de websockets para Java, Android, Unity... compatibles con nuestro chat
 
-<!-- FIN DE PRESENTACION -->	
+---
+## Socket.io en el cliente
+Ahora programaremos el cliente con Javascript, para tener todo limpio y ordenado, crearemos un archivo **chat.js** en _public/js/_ y ñp cargaremos en index.html:
+
+```html
+<!-- body code-->
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+</html>
+```
+_index.html_
+
+```javascript
+var serviceURL = document.URL; //Url from document source
+var socket = io.connect(serviceURL); //new socket connected to serviceURL
+
+//On socket conenction
+socket.on('connect', function(){
+	alert("Connected"); //alert when connected
+});
+```
+_chat.js_
+
+---
+## Socket.io en el cliente
+**Probemos!**
+1. `node server.js` para levantar el servidor
+2. `localhost:9090` en nuestro navegador.
+
+En el navegador veremos nuestra web y una alerta que dirá "Connected".
+En el server:
+```
+Magic happens in port 9090
+User connected
+```
+
+----
+Notemos que si recargamos la página o abrimos otra, otro "usuario" se conectará, si desconectamos el server (Ctrl+C) y lo volvemos a conectar, veremos que se nos conecta automáticamente un usuario y nos saldrá otra vez la alerta
+
+???
+* Reconexión automática!!
+* No es necesario reiniciar servidor cuando modificamos el cliente (es un recurso)
+
+---
+## Socket.io en el cliente
+Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a una aplicación de chat:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MyChat</title>
+</head>
+<body>
+  <center> <!-- Not good, i know -->
+  <h1>My Chat</h1>
+  <p>Node Wizardry</p>
+  <p id="chat" class="chat_content"></p> <!-- Chat messages are shown here -->
+     <!-- form to write our messages -->
+  <form action="javascript:void(0);" onsubmit="javascript:send();" id="chatform">
+    <input type="text" id="userInput"size="30" /><br />
+    <input type="submit" value="send" /> <!-- when input call send function -->
+  </form>
+  </center>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+</html>
+```
+_index.html_
+
+---
+## Socket.io en el cliente
+
+<center>
+    <img src="images/mychat_screen.png" alt="MyChat Screenshot">
+
+</center>
+_Screenshot de MyChat_
+
+---
+## Socket.io en el cliente
+Ya tenemos el layout, ahora, volvemos a nuestro chat.js e implementamos los eventos y funcionalidades que faltan:
+* **Recibir mensaje**: Crearemos un evento (por ejemplo _receive_) para la recepción de un mensaje, el evento contendrá como contenido el mensaje, que debemos mostrar en nuestro html (usasndo el DOM)
+```javascript
+//On message receive (custom event)
+socket.on('receive', function(msg) { //msg is the content
+    var chatobj=document.getElementById("chat"); //gets chat DOM object
+    //appends msg to content
+    chatobj.innerHTML=chatobj.innerHTML+'</br>'+msg;
+	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
+});
+```
+* **Desconexión:** Avisaremos al usuario que se ha desconectado
+```javascript
+//On disconnection
+socket.on('disconnect', function() {
+    var chatobj=document.getElementById("chat"); //gets chat DOM object
+	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Server desconectado";
+	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
+});
+```
+
+???
+Qué es el DOM ? (si alguien no lo sabe)
+
+---
+## Socket.io en el cliente
+
+* **Conexión**: alert no es una buena forma de avisar que nos hemos conectado, cambiaremos el evento de forma similar a disconnect:
+```javascript
+socket.on('connect', function(){
+    var chatobj=document.getElementById("chat"); //gets chat DOM object
+	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Conectado al servidor";
+	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
+});
+```
+
+* **Envio de mensaje**: Cuando el cliente envie su mensaje se ejecutará la funcion `send()` (mirar index.html), debemos realizar un socket.emit al servidor con el mensaje escrito por el usuario:
+```javascript
+//sends message
+function send() {
+    //reads userInput value
+	var input = document.getElementById("userInput").value;
+    //erases userInput value in html
+	document.getElementById("userInput").value="";
+    //if input longer than 0, emits message
+	if(input.trim().length>0)	socket.emit('msg',input.trim());
+}
+```
+
+---
+## Broadcasting de mensajes
+Probemos nuestro chat!! (de nuevo, levantamos servidor y vamos a localhost:9090)
+
+Al iniciar la web, veremos que pone "_Conectado al servidor_" bajo el título (éxito), ahora probemos a escribir algo en el recuadro y presionamos enter...
+
+--
+count: false
+Observamos que al presionar enter se borra el recuadro (como dijismo en `send()`), sin embargo, no pasa nada más...
+
+Veamos el output del servidor...
+
+```
+Magic happens in port 9090
+User connected
+Received:hola
+```
+
+El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca que lo envie a los clientes
+
+![Scream](images/scream.png)
+
+???
+Probar a desconectar y reconectar el servidor
+
+---
+## Broadcasting de mensajes
+De nuevo, volvemos al servidor (server.js), al evento msg. vemos que, efectivamente, hace lo que le pedimos (console.log("Received:"+content))
+
+Ahora, tenemos que enviar el mensaje a **todos** los sockets conectados mediante el evento _receive_ para que lo muestren...
+
+```javascript
+socket.on('msg', function (content) {
+    //console.log("Received:"+content);
+    io.emit('receive', content); //note that is io.emit, not socket
+});
+```
+_Evento msg en server.js_
+
+----
+
+Notemos que usamos io.emit en lugar de socket, esto es porque queremos enviar el evento a **todos** los sockets conectados, no solo al actual
+
+---
+## Broadcasting de mensajes
+
+Ahora probamos y.... voilá, se reciben los mensajes entre nuestros usuarios (BRUEJRÍA!!)
+
+Es interesante hacer diversas pruebas, como conectar y desconectar usuarios, tirar el servidor y levantarlo de nuevo o conectarse a un chat en otro ordenador por internet o lan.
+Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
+
+
+<!-- FIN DE PRESENTACION -->
     </textarea>
     <script src="./remark.js">
     </script>

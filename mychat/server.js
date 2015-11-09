@@ -19,7 +19,7 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
 
 	//attach an event listener (msg) to connected socket
 	socket.on('msg', function (content) {
-		console.log("Received:"+content);
+		io.emit('receive', content);
   	});
 	//will fire when socket disconnects
 	socket.on('disconnect', function () {
