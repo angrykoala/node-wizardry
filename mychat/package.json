@@ -1,0 +1,24 @@
+{
+  "name": "mychat",
+  "version": "0.1.0",
+  "description": "This is my description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "demiurgosoft <demiurgosoft@hotmail.com>",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demiurgosoft/mychat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/demiurgosoft/mychat/issues"
+  },
+  "homepage": "https://github.com/demiurgosoft/mychat#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}

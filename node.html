@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Node.js</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif','Ubuntu'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz','Ubuntu';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center,middle
+Brujería con Node.js
+====================
+_Andrés Ortiz Corrales_    
+_@demiurgosoft_
+
+![Cool Koala](images/cool_koala.jpg)    
+![CC_by_sa](images/cc_license.png)
+---
+## <center> Qué es Node.js? </center>
+???
+2 ideas principales:
+* Javascript
+* asíncrono
+
+--
+count:false
+* ### Javascript en servidor
+	* Un único lenguaje
+	* Eficiente (Google V8)
+
+--
+count:false
+* ### Asíncrono (a.k.a. callback hell)
+	* Eliminar esperas I/O y aprovechar recursos
+	* Tiempo real
+---
+class: center,middle
+![Async vs sync](images/1.png)
+
+???
+Async vs sync
+
+---
+class:center,middle
+# Taller: MyChat
+_Small chat service_
+---
+## Primeros pasos
+**Instalar node (debian/ubuntu)**
+* **Version 0.12**
+	* `sudo apt-get install nodejs`
+
+* **Version 4.2.2 (LTS)**
+	* `curl -sL https://deb.nodesource.com/setup | sudo bash -`    
+`sudo apt-get install nodejs`
+
+**Windows (4.2.2/5.0)**
+Descargar instalador:
+* 4.2.2 (LTS): <https://nodejs.org/en/download/>
+* 5.0 (stable): <https://nodejs.org/en/download/stable/>
+
+----
+
+* `node --version`
+
+* Si npm no se encuentra instalado `sudo apt-get install npm`
+
+---
+## Primeros pasos
+**Crear Proyecto** 
+* `npm init` en la raiz del proyecto para general _package.json_
+	* Los campos se rellenerán automáticamente si es posible
+	* **License**: GPL-3.0,ASC,MIT...
+	* Podemos editar algunos campos manualmente
+
+```
+-myChat/
+	|-package.json
+	|-server.js
+	|-README.md
+	|-app/
+		|-"funny code here"
+	|-config/
+		|-"boring code here"
+	|-node_modules/
+		|-"dependencies"
+	|-test/
+		|-"testing code here"
+	|-public/
+		|-"server resources here"
+```
+_Ejemplo de un proyecto en Node.js_
+
+???
+Repositorio github (repository,web,bugs...)
+
+---
+## Primeros pasos
+
+```Json
+{
+  "name": "mychat",
+  "version": "0.1.0",
+  "description": "This is my description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js" 
+  },
+  "author": "demiurgosoft <demiurgosoft@hotmail.com>",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demiurgosoft/mychat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/demiurgosoft/mychat/issues"
+  },
+  "homepage": "https://github.com/demiurgosoft/mychat#readme"
+}
+
+```
+_Ejemplo de package.json_
+
+???
+package.json
+
+---
+## Primeros pasos: Hello Chat
+
+```Javascript
+var express = require("express"); //"loads" express framework library
+var app = express(); //new express app (some magic here)
+var http = require('http').Server(app); //http server using app
+
+//what happens with a get request to our server?
+app.get('/', function(req, res) {
+	//this function is a magical callback
+	//req is the request info, response is used to send our funny stuff
+	res.send("Hello Chat");
+});
+
+//server starts listening to port 9090
+http.listen(9090, function() {
+	//Another magical callback
+	console.log("Magic happens in port 9090");
+});
+```
+_server.js_
+
+**express**: Framework para la creación de servidores en Node.js
+
+¿Dónde está la libreria express?
+
+???
+* **express**
+* callback
+
+---
+## Primeros pasos: Instalando dependencias
+**npm** (_Node Package Manager_) nos permite gestionar nuestras aplicaciones de Node.js y sus dependencias
+
+¿Necesitamos express? ¿Tenemos un _package.json_?
+* `npm install --save express` 
+	* npm install instalará express en _node_modules_ automaticamente
+	* La opción --save añadriá a _package.json_ la libreria express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos    
+```Json
+	 "dependencies": {
+        "express": "^4.13.3"
+ 	 }
+```
+
+---
+## Primeros pasos: Ejecutar el ejemplo
+* `node server.js` Ejecutará nuestro servidor de ejemplo:    
+```    
+	$ node server.js 
+	Magic happens in port 9090
+```
+	
+* Desde cualquier navegador: `localhost:9090`    
+	`Hello Chat`
+	
+----
+Ejecutar `node` nos permitirá acceder a un intérprete de Node.js, muy útil para probar cosas
+
+
+---
+## Servir un fichero Html
+**Vamos a darle más gracia a nuestra web!**    
+En `public/` crearemos un fichero _client.html_ (recordemos que ahí van nuestros "recursos")
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>MyChat</title>
+</head>
+<body>
+    <h1>My Chat</h1>
+    <p>Node Wizardryc</p>
+
+</body>
+</html>
+```
+_client.html_
+
+???
+```
+-myChat/
+	|-package.json
+	|-server.js
+	|-node_modules/
+		|-express/
+	|-public/
+		|-client.html
+```
+
+---
+## Servir un fichero Html
+* Para devolver los recursos de la carpeta public con express, añadimos:
+```javascript     
+app.use(express.static('public'))
+```
+* En el navegador: `localhost:9090/client.html` nos devolverá nuestro fichero html
+* En la función _app.get_ que creamos al principio podemos, además redireccionar a nuestro fichero cliente con `res.redirect('/client.html')`
+
+```javascript
+//requires and stuff
+app.use(express.static('public')); //makes public folder as root of resources
+
+app.get('/', function(req, res) {
+	res.redirect('/client.html'); //redirects to client.html
+});
+//more code and stuff here
+```
+_server.js_
+
+???
+* Con redirect, `localhost:9090/` nos llevará a `localhost:9090/client.html`
+
+---
+class:center
+Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?    
+![Scared Koala Here](images/scared_koala.png)
+
+---
+## Websockets con Socket.io
+Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que un protolo http.
+
+<center>
+<img src="images/websocket.png" alt="Websocket diagram"></br>
+Diagrama de WebSocket
+</center>
+
+---
+## Socket.io
+Es basado en eventos, con dos métodos principales:
+
+* **On**: Asignará un callback (esas cosas chulas) a un determinado evento, el callback se ejecutará cuando recibamos un evento (mensaje) determinado
+	* `socket.on('mi_mensaje',callback)`
+
+
+* **Emit**: Enviará un evento (mensaje) determinado, opcionalmente se podrá añadir un contenido (string,json,...)
+	* `socket.emit('mi_mensaje','contenido')`
+	* Con `socket.send('contenido')` realizamos la misma acción, sin embargo el evento disparado será siempre _'message'_
+
+----
+Socket.io nos permite enviar mensajes uno a uno, así como broadcasting (entre otras muchas opciones)
+
+???
+Opciones de socket.io:
+* Namespaces, rooms
+* Mensajes con ACK
+
+---
+
+## Socket.io - Eventos
+Podemos asignar los eventos que queramos a nuestros mensajes, sin embargo, socket.io proporciona algunos eventos por defecto:
+
+* **message:** Evento de los mensajes por defecto al ejecutar `socket.send`
+
+* **connect:** Evento que se ejecutará en la conexión exitosa de un socket
+
+* **disconnect:** Evento que se ejecutará en la desconexión de un socket
+
+----
+Hay más eventos como `reconnect` o `error` entre otros
+
+---
+## Socket.io en el servidor
+
+En primer lugar, necesitaremos la libreria 'socket.io', por lo que la incluiremos al igual que hicimos con express:
+1. `$ npm install --save socket.io` para descargar e instalar socket.io en el proyecto    
+```js
+	  "dependencies": {
+      "express": "^4.13.3",
+      "socket.io": "^1.3.7"
+	  }
+```
+2. `var io=require('socket.io')(http)` al comienzo de _server.js_, con esto asignamos los websockets a nuestro servidor http   
+
+---
+## Socket.io en el servidor
+
+```js
+//When a socket connects
+io.on('connection', function (socket) { //the callback arg is the connected socket
+ 	console.log("User connected");
+
+	//attach an event listener (msg) to connected socket
+	socket.on('msg', function (content) {
+		console.log("Received:"+content);
+  	});
+	//will fire when socket disconnects
+	socket.on('disconnect', function () {
+		io.emit('User disconnected');
+	});
+});
+```
+
+???
+* Importante, });
+
+---
+## Socket.io en el servidor
+
+1. `io.on('connection',function(socket)...` Este evento se disparará cuando cualquier socket se conecte, el callback (function) recibe el socket conectado como argumento, el resto de eventos se encuentran dentro del callback
+
+2. `socket.on('msg',function(content)...` Evento asignado al socket conectado, el callback contiene el contenido como argumento, se ejecutará al recibir un mensaje
+	* 'msg' es un evento personalizado, solo se disparará con mensajes con dicho evento!
+
+3. `socket.on('disconnect', function ()...` Evento asignado a la desconexión del socket, nos informará de que se ha desconectado y nos permitirá actualizar la información necesario
+
+---
+## Socket.io en el cliente
+Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectarlos a algo, es decir, el cliente
+
+Por suerte, el cliente también ejecuta _Javascript_, por tanto, programar con Socket.io en el cliente es igual
+
+* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando la "web cliente", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en client.html:
+```html
+</body>
+<script src="/socket.io/socket.io.js"></script>
+</html>
+```
+_client.html_
+
+
+
+???
+* Tambien es posible proveer manualmente el cliente, o descargarlo desde el repositorio oficial
+
+Ademas de socket.io-client para javascript, existen multitud de librerias cliente de websockets para Java, Android, Unity... compatibles con nuestro chat
+
+<!-- FIN DE PRESENTACION -->	
+    </textarea>
+    <script src="./remark.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
