@@ -11,12 +11,12 @@
   "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/demiurgosoft/mychat.git"
+    "url": "git+https://github.com/demiurgosoft/brujeria-con-node.git"
   },
   "bugs": {
-    "url": "https://github.com/demiurgosoft/mychat/issues"
+    "url": "https://github.com/demiurgosoft/brujeria-con-node/issues"
   },
-  "homepage": "https://github.com/demiurgosoft/mychat#readme",
+  "homepage": "https://github.com/demiurgosoft/brujeria-con-node#readme",
   "dependencies": {
     "express": "^4.13.3",
     "socket.io": "^1.3.7"
