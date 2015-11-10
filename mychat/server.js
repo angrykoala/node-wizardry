@@ -23,7 +23,7 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
   	});
 	//will fire when socket disconnects
 	socket.on('disconnect', function () {
-		io.emit('User disconnected');
+		console.log('User disconnected');
 	});
 });
 

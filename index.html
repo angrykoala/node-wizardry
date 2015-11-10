@@ -21,22 +21,35 @@
 class: center,middle
 Brujería con Node.js
 ====================
-_Andrés Ortiz Corrales_
-_@demiurgosoft_
+_Andrés Ortiz Corrales_ - _@demiurgosoft_    
 
-![Cool Koala](images/cool_koala.jpg)
+
+![Cool Koala](images/cool_koala.jpg)    
 ![CC_by_sa](images/cc_license.png)
+---
+## Agradecimientos
+* **Oficina de Software Libre (UGR)**: <https://github.com/oslugr>
+
+* **Alpha-Bug**: <https://github.com/Alpha-Bug>
+
+* **Beer.js Granada**: <https://github.com/beerjs/granada>
+
+???
+Me salto quien soy :D
 ---
 ## <center> Qué es Node.js? </center>
 ???
-2 ideas principales:
-* Javascript
-* asíncrono
+* Entorno de ejecución de JS 
+* Usado para servers    
+
+* 2 ideas principales:
+    * Javascript
+    * Asíncrono (no bloqueante)
 
 --
 count:false
-* ### Javascript en servidor
-	* Un único lenguaje
+* ### Javascript
+	* Un único lenguaje (cliente-servidor)
 	* Eficiente (Google V8)
 
 --
@@ -54,7 +67,8 @@ Async vs sync
 ---
 class:center,middle
 # Taller: MyChat
-_Small chat service_
+_Small chat service_    
+<https://github.com/demiurgosoft/brujeria-con-node/>
 ---
 ## Primeros pasos
 **Instalar node (debian/ubuntu)**
@@ -79,7 +93,7 @@ Descargar instalador:
 ---
 ## Primeros pasos
 **Crear Proyecto**
-* `npm init` en la raiz del proyecto para general _package.json_
+* `npm init` en la raíz del proyecto para generar _package.json_
 	* Los campos se rellenerán automáticamente si es posible
 	* **License**: GPL-3.0,ASC,MIT...
 	* Podemos editar algunos campos manualmente
@@ -103,8 +117,8 @@ Descargar instalador:
 _Ejemplo de un proyecto en Node.js_
 
 ???
-Repositorio github (repository,web,bugs...)
-
+* Repositorio github (repository,web,bugs...)
+* No es necesario server.js, puede llamarse index,app o lo que sea
 ---
 ## Primeros pasos
 
@@ -113,13 +127,13 @@ Repositorio github (repository,web,bugs...)
   "name": "mychat",
   "version": "0.1.0",
   "description": "This is my description",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "demiurgosoft <demiurgosoft@hotmail.com>",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/demiurgosoft/mychat.git"
@@ -189,7 +203,7 @@ _server.js_
 	Magic happens in port 9090
 ```
 
-* Desde cualquier navegador: `localhost:9090`
+* Desde cualquier navegador: `localhost:9090`    
 	`Hello Chat`
 
 ----
@@ -199,8 +213,8 @@ Ejecutar `node` nos permitirá acceder a un intérprete de Node.js, muy útil pa
 
 ---
 ## Servir un fichero Html
-**Vamos a darle más gracia a nuestra web!**
-En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros "recursos")
+**Vamos a darle más gracia a nuestra web!**     
+En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros "recursos")    
 
 ```html
 <!DOCTYPE html>
@@ -212,7 +226,7 @@ En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros
 <body>
     <center> <!-- Not good, i know, use css for this!! -->
     <h1>My Chat</h1>
-    <p>Node Wizardryc</p>
+    <p>Node Wizardry</p>
     </center>
 </body>
 </html>
@@ -252,15 +266,17 @@ _server.js_
 
 ???
 * Con redirect, `localhost:9090/` nos llevará a `localhost:9090/index.html`
+* Probar ahora!
 
 ---
 class:center
 Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?
+
 ![Scared Koala Here](images/scared_koala.png)
 
 ---
 ## Websockets con Socket.io
-Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que un protolo http.
+Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que peticiones http.
 
 <center>
 <img src="images/websocket.png" alt="Websocket diagram"></br>
@@ -275,7 +291,7 @@ Es basado en eventos, con dos métodos principales:
 	* `socket.on('mi_mensaje',callback)`
 
 
-* **Emit**: Enviará un evento (mensaje) determinado, opcionalmente se podrá añadir un contenido (string,json,...)
+* **Emit**: Enviará un mensaje (evento) determinado, opcionalmente se podrá añadir un contenido (string,json,...)
 	* `socket.emit('mi_mensaje','contenido')`
 	* Con `socket.send('contenido')` realizamos la misma acción, sin embargo el evento disparado será siempre _'message'_
 
@@ -328,7 +344,7 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
   	});
 	//will fire when socket disconnects
 	socket.on('disconnect', function () {
-		io.emit('User disconnected');
+		console.log('User disconnected');
 	});
 });
 ```
@@ -344,15 +360,15 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
 2. `socket.on('msg',function(content)...` Evento asignado al socket conectado, el callback contiene el contenido como argumento, se ejecutará al recibir un mensaje
 	* 'msg' es un evento personalizado, solo se disparará con mensajes con dicho evento!
 
-3. `socket.on('disconnect', function ()...` Evento asignado a la desconexión del socket, nos informará de que se ha desconectado y nos permitirá actualizar la información necesario
+3. `socket.on('disconnect', function ()...` Evento asignado a la desconexión del socket, nos informará de que se ha desconectado y nos permitirá actualizar la información necesaria
 
 ---
 ## Socket.io en el cliente
-Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectarlos a algo, es decir, el cliente
+Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectarlos a algo, es decir, un cliente
 
-Por suerte, el cliente también ejecuta _Javascript_, por tanto, programar con Socket.io en el cliente es igual
+Por suerte, el cliente (web) también ejecutara _Javascript_, por tanto, programar con Socket.io en el cliente es igual
 
-* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando la "web cliente", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
+* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando el "cliente web", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
 ```html
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -368,7 +384,7 @@ Ademas de socket.io-client para javascript, existen multitud de librerias client
 
 ---
 ## Socket.io en el cliente
-Ahora programaremos el cliente con Javascript, para tener todo limpio y ordenado, crearemos un archivo **chat.js** en _public/js/_ y ñp cargaremos en index.html:
+Ahora programaremos el cliente con Javascript, para tener todo limpio y ordenado, crearemos un archivo **chat.js** en _public/js/_ y lo cargaremos en index.html:
 
 ```html
 <!-- body code-->
@@ -389,6 +405,9 @@ socket.on('connect', function(){
 });
 ```
 _chat.js_
+
+???
+* socket on(connect vs connection)
 
 ---
 ## Socket.io en el cliente
@@ -427,8 +446,8 @@ Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a 
   <p id="chat" class="chat_content"></p> <!-- Chat messages are shown here -->
      <!-- form to write our messages -->
   <form action="javascript:void(0);" onsubmit="javascript:send();" id="chatform">
-    <input type="text" id="userInput"size="30" /><br />
-    <input type="submit" value="send" /> <!-- when input call send function -->
+    <input type="text" id="userInput" size="30" /></br>
+    <input type="submit" value="Send" /> <!-- when input call send function -->
   </form>
   </center>
 </body>
@@ -438,6 +457,8 @@ Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a 
 ```
 _index.html_
 
+???
+class: chat content no es necesario !!
 ---
 ## Socket.io en el cliente
 
@@ -457,7 +478,6 @@ socket.on('receive', function(msg) { //msg is the content
     var chatobj=document.getElementById("chat"); //gets chat DOM object
     //appends msg to content
     chatobj.innerHTML=chatobj.innerHTML+'</br>'+msg;
-	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
 });
 ```
 * **Desconexión:** Avisaremos al usuario que se ha desconectado
@@ -466,7 +486,6 @@ socket.on('receive', function(msg) { //msg is the content
 socket.on('disconnect', function() {
     var chatobj=document.getElementById("chat"); //gets chat DOM object
 	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Server desconectado";
-	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
 });
 ```
 
@@ -481,7 +500,6 @@ Qué es el DOM ? (si alguien no lo sabe)
 socket.on('connect', function(){
     var chatobj=document.getElementById("chat"); //gets chat DOM object
 	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Conectado al servidor";
-	chatobj.scrollTop = chatobj.scrollHeight; //scrolls down
 });
 ```
 
@@ -506,7 +524,7 @@ Al iniciar la web, veremos que pone "_Conectado al servidor_" bajo el título (�
 
 --
 count: false
-Observamos que al presionar enter se borra el recuadro (como dijismo en `send()`), sin embargo, no pasa nada más...
+Observamos que al presionar enter se borra el recuadro (como dijimos en `send()`), sin embargo, no pasa nada más...
 
 Veamos el output del servidor...
 
@@ -518,10 +536,11 @@ Received:hola
 
 El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca que lo envie a los clientes
 
-![Scream](images/scream.png)
-
 ???
 Probar a desconectar y reconectar el servidor
+--
+count:false
+![Scream](images/scream.png)
 
 ---
 ## Broadcasting de mensajes
@@ -532,7 +551,7 @@ Ahora, tenemos que enviar el mensaje a **todos** los sockets conectados mediante
 ```javascript
 socket.on('msg', function (content) {
     //console.log("Received:"+content);
-    io.emit('receive', content); //note that is io.emit, not socket
+    console.log('Received:', content); //note that is io.emit, not socket
 });
 ```
 _Evento msg en server.js_
@@ -544,7 +563,7 @@ Notemos que usamos io.emit en lugar de socket, esto es porque queremos enviar el
 ---
 ## Broadcasting de mensajes
 
-Ahora probamos y.... voilá, se reciben los mensajes entre nuestros usuarios (BRUEJRÍA!!)
+Ahora probamos y.... voilá, se reciben los mensajes entre nuestros usuarios (BRUJERÍA!!)
 
 Es interesante hacer diversas pruebas, como conectar y desconectar usuarios, tirar el servidor y levantarlo de nuevo o conectarse a un chat en otro ordenador por internet o lan.
 Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
@@ -553,11 +572,14 @@ Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
 ## Y ahora?
 ¿Crear un CSS para poner mejor el cliente chat? ¿Hacer una aplicación android? ¿Añadir usuarios? ¿Pillar una cerveza?
 
-Come and see the world of Node.js
+--
+count:false
+Come and see the world of Node.js     
 ![Smashing](images/smash.jpg)
 
 * Más cosicas chulas en: <https://github.com/demiurgosoft>
 * Muchos módulos chulos en: <https://www.npmjs.com/>
+* Node.js (chulo) en: <https://nodejs.org/>
 
 ---
 class: middle,center
