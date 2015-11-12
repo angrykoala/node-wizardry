@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Node.js</title>
+    <title>Brujería con Node.js</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -22,10 +22,12 @@ class: center,middle
 Brujería con Node.js
 ====================
 _Andrés Ortiz Corrales_ - _@demiurgosoft_    
-
-
 ![Cool Koala](images/cool_koala.jpg)    
-![CC_by_sa](images/cc_license.png)
+<https://github.com/demiurgosoft>    
+![CC_by_sa](images/cc_license.png)        
+
+
+
 ---
 ## Agradecimientos
 * **Oficina de Software Libre (UGR)**: <https://github.com/oslugr>
@@ -35,12 +37,12 @@ _Andrés Ortiz Corrales_ - _@demiurgosoft_
 * **Beer.js Granada**: <https://github.com/beerjs/granada>
 
 ???
-Me salto quien soy :D
+Me salto quien soy :P
 ---
 ## <center> Qué es Node.js? </center>
 ???
 * Entorno de ejecución de JS 
-* Usado para servers    
+* Usado para servidores    
 
 * 2 ideas principales:
     * Javascript
@@ -94,7 +96,7 @@ Descargar instalador:
 ## Primeros pasos
 **Crear Proyecto**
 * `npm init` en la raíz del proyecto para generar _package.json_
-	* Los campos se rellenerán automáticamente si es posible
+	* Los campos se rellenarán automáticamente si es posible
 	* **License**: GPL-3.0,ASC,MIT...
 	* Podemos editar algunos campos manualmente
 
@@ -117,7 +119,7 @@ Descargar instalador:
 _Ejemplo de un proyecto en Node.js_
 
 ???
-* Repositorio github (repository,web,bugs...)
+* Repositorio GitHub (repositorio,web,bugs...)
 * No es necesario server.js, puede llamarse index,app o lo que sea
 ---
 ## Primeros pasos
@@ -175,7 +177,7 @@ _server.js_
 
 **express**: Framework para la creación de servidores en Node.js
 
-¿Dónde está la libreria express?
+¿Dónde está la librería express?
 
 ???
 * **express**
@@ -187,8 +189,8 @@ _server.js_
 
 ¿Necesitamos express? ¿Tenemos un _package.json_?
 * `npm install --save express`
-	* npm install instalará express en _node_modules_ automaticamente
-	* La opción --save añadriá a _package.json_ la libreria express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos
+	* npm install instalará express en _node_modules_ automáticamente
+	* La opción --save añadirá a _package.json_ la librería express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos
 ```Json
 	 "dependencies": {
         "express": "^4.13.3"
@@ -320,7 +322,7 @@ Hay más eventos como `reconnect` o `error` entre otros
 ---
 ## Socket.io en el servidor
 
-En primer lugar, necesitaremos la libreria 'socket.io', por lo que la incluiremos al igual que hicimos con express:
+En primer lugar, necesitaremos la librería 'socket.io', por lo que la incluiremos al igual que hicimos con express:
 1. `$ npm install --save socket.io` para descargar e instalar socket.io en el proyecto
 ```js
 	  "dependencies": {
@@ -368,7 +370,7 @@ Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectar
 
 Por suerte, el cliente (web) también ejecutara _Javascript_, por tanto, programar con Socket.io en el cliente es igual
 
-* Lo primero (de nuevo), es conseguir la libreria de algún sitio (recordemos que ahora estaremos programando el "cliente web", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
+* Lo primero (de nuevo), es conseguir la librería de algún sitio (recordemos que ahora estaremos programando el "cliente web", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
 ```html
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -378,9 +380,9 @@ _index.html_
 
 
 ???
-* Tambien es posible proveer manualmente el cliente, o descargarlo desde el repositorio oficial
+* También es posible proveer manualmente el cliente, o descargarlo desde el repositorio oficial
 
-Ademas de socket.io-client para javascript, existen multitud de librerias cliente de websockets para Java, Android, Unity... compatibles con nuestro chat
+Además de socket.io-client para javascript, existen multitud de librerías cliente de websockets para Java, Android, Unity... compatibles con nuestro chat
 
 ---
 ## Socket.io en el cliente
@@ -471,7 +473,7 @@ _Screenshot de MyChat_
 ---
 ## Socket.io en el cliente
 Ya tenemos el layout, ahora, volvemos a nuestro chat.js e implementamos los eventos y funcionalidades que faltan:
-* **Recibir mensaje**: Crearemos un evento (por ejemplo _receive_) para la recepción de un mensaje, el evento contendrá como contenido el mensaje, que debemos mostrar en nuestro html (usasndo el DOM)
+* **Recibir mensaje**: Crearemos un evento (por ejemplo _receive_) para la recepción de un mensaje, el evento contendrá como contenido el mensaje, que debemos mostrar en nuestro html (usando el DOM)
 ```javascript
 //On message receive (custom event)
 socket.on('receive', function(msg) { //msg is the content
@@ -503,7 +505,7 @@ socket.on('connect', function(){
 });
 ```
 
-* **Envio de mensaje**: Cuando el cliente envie su mensaje se ejecutará la funcion `send()` (mirar index.html), debemos realizar un socket.emit al servidor con el mensaje escrito por el usuario:
+* **Envío de mensaje**: Cuando el cliente envíe su mensaje se ejecutará la función `send()` (mirar index.html), debemos realizar un socket.emit al servidor con el mensaje escrito por el usuario:
 ```javascript
 //sends message
 function send() {
@@ -534,7 +536,7 @@ User connected
 Received:hola
 ```
 
-El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca que lo envie a los clientes    
+El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca que lo envíe a los clientes    
 ???
 Probar a desconectar y reconectar el servidor
 --
@@ -564,21 +566,19 @@ Notemos que usamos io.emit en lugar de socket, esto es porque queremos enviar el
 
 Ahora probamos y.... voilá, se reciben los mensajes entre nuestros usuarios (BRUJERÍA!!)
 
-Es interesante hacer diversas pruebas, como conectar y desconectar usuarios, tirar el servidor y levantarlo de nuevo o conectarse a un chat en otro ordenador por internet o lan.
+Es interesante hacer diversas pruebas, como conectar y desconectar usuarios, tirar el servidor y levantarlo de nuevo o conectarse a un chat en otro ordenador por internet o Lan.
 Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
 
 ---
 ## Y ahora?
-¿Crear un CSS para poner mejor el cliente chat? ¿Hacer una aplicación android? ¿Añadir usuarios? ¿Pillar una cerveza?
+¿Crear un CSS para poner mejor el cliente chat? ¿Hacer una aplicación Android? ¿Añadir usuarios? ¿Pillar una cerveza?
 
 --
 count:false
 Come and see the world of Node.js     
 ![Smashing](images/smash.jpg)
 
-* Más cosicas chulas en: <https://github.com/demiurgosoft>
-* Muchos módulos chulos en: <https://www.npmjs.com/>
-* Node.js (chulo) en: <https://nodejs.org/>
+Módulos npm para explorar: <https://www.npmjs.com/>
 
 ---
 class: middle,center
