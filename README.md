@@ -13,5 +13,5 @@ Charla y otras cosas bajo **Licencia CC-by-sa**
 
 -----
 
-Web Oficial: <http://demiurgosoft.github.io/brujeria-con-node/>
+Web Oficial: <http://demiurgosoft.github.io/brujeria-con-node/>  
 Presentación Online: <https://rawgit.com/demiurgosoft/brujeria-con-node/master/index.html>
