@@ -72,6 +72,14 @@ class:center,middle
 _Small chat service_    
 <https://github.com/demiurgosoft/brujeria-con-node/>
 ---
+## MyChat
+Consiste en un sencillo servicio de chat web, con un espacio único para un chat común a tiempo real con plataforma web.
+
+Crearemos una web sencilla usando _node.js_ con el framework _express_, y aprenderemos a manejar websockets con el módulo _socket.io_ para el servicio de chat, además veremos como gestionar nuestro proyecto con _npm_
+
+
+
+---
 ## Primeros pasos
 **Instalar node (debian/ubuntu)**
 * **Version 0.12**
@@ -265,10 +273,10 @@ _index.html_
 ## Servir un fichero Html
 * Para devolver los recursos de la carpeta public con express, añadimos:
 ```javascript
-app.use(express.static('public'))
+app.use(express.static('public'));
 ```
 * En el navegador: `localhost:9090/index.html` nos devolverá nuestro fichero html
-* En la función _app.get_ que creamos al principio podemos, además redireccionar a nuestro fichero cliente con `res.redirect('/index.html')`
+* En la función _app.get_ que creamos al principio podemos redireccionar a nuestro fichero cliente con `res.redirect('/index.html')`
 
 ```javascript
 //requires and stuff
@@ -280,6 +288,9 @@ app.get('/', function(req, res) {
 //more code and stuff here
 ```
 _server.js_
+
+----
+~~`res.sendFile(...)`~~: Nos permite enviar un fichero, sin embargo, no nos permitirá enviar css,scripts o imagenes directamente
 
 ???
 * Con redirect, `localhost:9090/` nos llevará a `localhost:9090/index.html`
