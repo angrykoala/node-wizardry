@@ -308,7 +308,8 @@ Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidirecci
 
 <center>
 <img src="images/websocket.png" alt="Websocket diagram"></br>
-Diagrama de WebSocket
+Diagrama de WebSocket</br>
+www.pubnub.com/blog/2015-01-05-websockets-vs-rest-api-understanding-the-difference/
 </center>
 
 ???
@@ -477,7 +478,7 @@ Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a 
   <center> <!-- Not good, i know -->
   <h1>My Chat</h1>
   <p>Node Wizardry</p>
-  <p id="chat" class="chat_content"></p> <!-- Chat messages are shown here -->
+  <p id="chat"></p> <!-- Chat messages are shown here -->
      <!-- form to write our messages -->
   <form action="javascript:void(0);" onsubmit="javascript:send();" id="chatform">
     <input type="text" id="userInput" size="30" /></br>
@@ -525,6 +526,7 @@ socket.on('disconnect', function() {
 
 ???
 Qué es el DOM ? (si alguien no lo sabe)
+4 eventos
 
 ---
 ## Socket.io en el cliente
@@ -584,7 +586,7 @@ Ahora, tenemos que enviar el mensaje a **todos** los sockets conectados mediante
 ```javascript
 socket.on('msg', function (content) {
     //console.log("Received:"+content);
-    console.log('Received:', content); //note that is io.emit, not socket
+    io.emit('receive', content); //note that is io.emit, not socket
 });
 ```
 _Evento msg en server.js_
