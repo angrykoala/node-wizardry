@@ -304,12 +304,15 @@ Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?
 
 ---
 ## Websockets con Socket.io
-Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que peticiones http.
+Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que las peticiones http.
 
 <center>
 <img src="images/websocket.png" alt="Websocket diagram"></br>
 Diagrama de WebSocket
 </center>
+
+???
+Usa estándares y puerto 80 (bueno para evitar firewalls)
 
 ---
 ## Socket.io
@@ -338,7 +341,10 @@ Podemos asignar los eventos que queramos a nuestros mensajes, sin embargo, socke
 
 * **message:** Evento de los mensajes por defecto al ejecutar `socket.send`
 
-* **connect:** Evento que se ejecutará en la conexión exitosa de un socket
+
+* **connection/connect:** Evento que se ejecutará en la conexión exitosa de un socket
+	* En el cliente el evento es **connect**
+
 
 * **disconnect:** Evento que se ejecutará en la desconexión de un socket
 
