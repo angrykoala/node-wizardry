@@ -536,26 +536,25 @@ socket.on('receive', function(msg) { //msg is the content
 //On disconnection
 socket.on('disconnect', function() {
     var chatobj=document.getElementById("chat"); //gets chat DOM object
-	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Server desconectado";
+	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Server connection lost";
 });
 ```
 
 ???
-Qué es el DOM ? (si alguien no lo sabe)    
-4 eventos
+What is DOM    
 
 ---
-## Socket.io en el cliente
+## Client-side Socket.io
 
-* **Conexión**: alert no es una buena forma de avisar que nos hemos conectado, cambiaremos el evento de forma similar a disconnect:
+* **Connection**: We will change the way to notify a new connection, similar to disconnection:
 ```javascript
 socket.on('connect', function(){
     var chatobj=document.getElementById("chat"); //gets chat DOM object
-	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"Conectado al servidor";
+	chatobj.innerHTML=chatobj.innerHTML+'</br>'+"connected";
 });
 ```
 
-* **Envío de mensaje**: Cuando el cliente envíe su mensaje se ejecutará la función `send()` (mirar index.html), debemos realizar un socket.emit al servidor con el mensaje escrito por el usuario:
+* **Send message**: When the user submits their message, the function `send()` will be executed (see index.html), we must call `socket.emit` to send the message to the server:
 ```javascript
 //sends message
 function send() {
@@ -569,35 +568,37 @@ function send() {
 ```
 
 ---
-## Broadcasting de mensajes
-Probemos nuestro chat!! (de nuevo, levantamos servidor y vamos a localhost:9090)
+## Message boradcasting
+Lets try again our chat
 
-Al iniciar la web, veremos que pone "_Conectado al servidor_" bajo el título (éxito), ahora probemos a escribir algo en el recuadro y presionamos enter...
+When entering the web, we can see "_connected_", now lets try typing something and pressing enter...
 
 --
 count: false
-Se borra el recuadro (como dijimos en `send()`), sin embargo, no pasa nada más...
+The input field erases like we said, however, nothing else happens...
 
-Veamos el output del servidor...
+Lets check the server console...
 
 ```
 Magic happens in port 9090
 User connected
-Received:hola
+Received:hello
 ```
 
-El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca que lo envíe a los clientes    
-???
-Probar a desconectar y reconectar el servidor
+The server receives the message successfuly, but it never sends it to the other users    
+
 --
 count:false
-![Scream](images/scream.png)
+<center>
+<img src="images/scream.png"></img>
+</center>
 
 ---
-## Broadcasting de mensajes
-De nuevo, volvemos al servidor (server.js), al evento msg. vemos que, efectivamente, hace lo que le pedimos (console.log("Received:"+content))
+## Message boradcasting
+Lets go back to our server (server.js), and we can see that it does what we asked
+ (`console.log("Received:"+content)`)
 
-Ahora, tenemos que enviar el mensaje a **todos** los sockets conectados mediante el evento _receive_ para que lo muestren...
+Now, we sould change the callback, so it will send the event _receive_ to all sockets...
 
 ```javascript
 socket.on('msg', function (content) {
@@ -605,34 +606,37 @@ socket.on('msg', function (content) {
     io.emit('receive', content); //note that is io.emit, not socket
 });
 ```
-_Evento msg en server.js_
+_msg event in server.js_
 
 ----
 
-Notemos que usamos io.emit en lugar de socket, esto es porque queremos enviar el evento a **todos** los sockets conectados, no solo al actual
+Note that we use `io.emit` instead of socket.emit, thats so the event is sent to all sockets
 
 ---
-## Broadcasting de mensajes
+## Message boradcasting
 
-Ahora probamos y.... voilá, se reciben los mensajes entre nuestros usuarios (BRUJERÍA!!)
+Lets try (again) and... success!! our messages reach to every user (Wizardry!!)
 
-Es interesante hacer diversas pruebas, como conectar y desconectar usuarios, tirar el servidor y levantarlo de nuevo o conectarse a un chat en otro ordenador por internet o Lan.
-Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
+Now we could try different things like connecting and disconnecting users, shutting down the server or connecting from different computers. As we can see, Socket.io and node.js are robust and fast for this kind of tasks.
 
 ---
-## Y ahora?
-¿Crear un CSS para poner mejor el cliente chat? ¿Hacer una aplicación Android? ¿Añadir usuarios? ¿Pillar una cerveza?
+## What now?
+¿Improve the web with CSS? ¿Android app? ¿Adding user registration? ¿Grab a beer?
 
 --
 count:false
-Come and see the world of Node.js     
-![Smashing](images/smash.jpg)
 
-Módulos npm para explorar: <https://www.npmjs.com/>
+<center>
+Come and see the world of Node.js</br>
+<img src="images/smash.jpg"></img>
+</center>
+
+* NPM modules to explore: <https://www.npmjs.com>
+* Check these slides: <https://github.com/demiurgosoft/node-wizardry>
 
 ---
 class: middle,center
-# Fin
+# The End
 ![Guinness Koala](images/guinness.jpg)
 <!-- FIN DE PRESENTACION -->
     </textarea>
