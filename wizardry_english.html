@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Brujería con Node.js</title>
+    <title>Node Wizardry</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -19,7 +19,7 @@
   <body>
     <textarea id="source">
 class: center,middle
-Brujería con Node.js
+Node Wizardry
 ====================
 _Andrés Ortiz Corrales_ - _@demiurgosoft_    
 ![Cool Koala](images/cool_koala.jpg)    
@@ -29,7 +29,7 @@ _Andrés Ortiz Corrales_ - _@demiurgosoft_
 
 
 ---
-## Agradecimientos
+## Acknowledgments
 * **Oficina de Software Libre (UGR)**: <https://github.com/oslugr>
 
 * **Alpha-Bug**: <https://github.com/Alpha-Bug>
@@ -37,12 +37,12 @@ _Andrés Ortiz Corrales_ - _@demiurgosoft_
 * **Beer.js Granada**: <https://github.com/beerjs/granada>
 
 ---
-## <center> Qué es Node.js? </center>
+## <center> What is Node.js? </center>
 
 
 ???
-* Entorno de ejecución de JS 
-* Usado para servidores    
+* JavaScript environment
+* Mostly used for servers
 
 * 2 ideas principales:
     * Javascript
@@ -51,14 +51,15 @@ _Andrés Ortiz Corrales_ - _@demiurgosoft_
 --
 count:false
 * ### Javascript
-	* Un único lenguaje cliente-servidor
-	* Eficiente (Google V8)
+	* Common language client-server
+	* Efficient (Google V8)
 
 --
 count:false
-* ### Asíncrono (a.k.a. callback hell)
-	* Eliminar esperas I/O y aprovechar recursos (non-blocking)
-
+* ### Asynchronous (a.k.a. callback hell)
+	* Non blocking I/O
+    * Perfect for real time
+    
 ---
 class: center,middle
 ![Async vs sync](images/sync_async.png)
@@ -68,46 +69,52 @@ Async vs sync
 
 ---
 class:center,middle
-# Taller: MyChat
+# Example: MyChat
 _Small chat service_    
-<https://github.com/demiurgosoft/brujeria-con-node/>
+<https://github.com/demiurgosoft/node-wizardry/example/mychat>
 ---
 ## MyChat
-Consiste en un sencillo servicio de webchat, con un espacio único para un chat común a tiempo real y plataforma web.
+Simple IRC-style chat service on a web platform.
 
-Crearemos una web sencilla usando _node.js_ con el framework _express_, y aprenderemos a manejar websockets con el módulo _socket.io_ para el servicio de chat, además veremos como gestionar nuestro proyecto con _npm_
+We will develop a simple webpage with _node.js_ and _express_ framework. We will learn to use websockets with the library _socket.io_ and how to handle our project with _npm_.
 
-_Basado en el tutorial oficial de **Socket.io**: <http://socket.io/get-started/chat/>_
+
+_Based on **Socket.io** official tutorial: <http://socket.io/get-started/chat/>_
 
 ---
-## Primeros pasos
-**Instalar node (debian/ubuntu)**
-* **Version 0.12**
+## First steps
+**Installing node (debian/ubuntu)**
+* **Old version**
 	* `sudo apt-get install nodejs`
 
-* **Version 4.2.2 (LTS)**
+* **Version 4 (LTS)**
 	* `curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -`    
 	* `sudo apt-get install -y nodejs`
 
-**Windows (4.2.2)**
-Descargar instalador:
-* 4.2.2 (LTS): <https://nodejs.org/en/download/>
+**Windows**
+Download and execute setup:
+* Version 4 (LTS): <https://nodejs.org/en/download/>
 
->Más opciones en <https://nodejs.org/en/download/package-manager/>
+>More options at <https://nodejs.org/en/download/package-manager/>
 
 ----
 
-* `node --version`
+* `node --version` to check version
 
-* Si npm no se encuentra instalado `sudo apt-get install npm`
+
+???
+
+* Package nvm allows to use different node versions
+
+* We will use terminal on both, linux and windows
 
 ---
-## Primeros pasos
-**Crear Proyecto**
-* `npm init` en la raíz del proyecto para generar _package.json_
-	* Los campos se rellenarán automáticamente si es posible
-	* **License**: GPL-3.0,ASC,MIT...
-	* Podemos editar algunos campos manualmente
+## First steps
+**Setting up the project**
+* `npm init` on the root of your project to generate _package.json_
+	* The fields will be automatically filled if possible
+	  * **License**: GPL-3.0,ASC,MIT...
+	* We can change some fields manually
 
 ```
 -myChat/
@@ -115,23 +122,23 @@ Descargar instalador:
 	|-server.js
 	|-README.md
 	|-app/
-		|-"funny code here"
+		|-"awesome code"
 	|-config/
-		|-"boring code here"
+		|-"configuration files"
 	|-node_modules/
 		|-"dependencies"
 	|-test/
-		|-"testing code here"
+		|-"testing code"
 	|-public/
-		|-"server resources here"
+		|-"server resources"
 ```
-_Ejemplo de un proyecto en Node.js_
+_Example of Node.js project_
 
 ???
-* Repositorio GitHub (repositorio,web,bugs...)
-* No es necesario server.js, puede llamarse index,app o lo que sea
+* GitHub repository
+* It could be called server.js, app.js, index.js or anything
 ---
-## Primeros pasos
+## First steps
 
 ```Json
 {
@@ -156,28 +163,13 @@ _Ejemplo de un proyecto en Node.js_
 }
 
 ```
-_Ejemplo de package.json_
+_package.json example_
 
 ???
 package.json
 ---
-## Primeros pasos
-### Npm lil' reference
-* `npm init`: crea un package.json 
-* `npm install`: instala las dependencias del package.json presente
-	* `npm install --save <package>`: instala paquete y lo guarda como dependencia
-	* `npm install -g <package>`: Instala paquete de forma global al sistema
-* `npm run <script>`: Ejecuta un comando en script (mirar json)
-* `npm start`: Ejecuta el comando de script "start"
-* `npm test`: Ejecuta comando de script "test"
-* `npm remove <package>`: Elimina paquete instalado
-	* Opciones -g y --save igual que en install
 
------
-Tranquilos, no cae en el examen
-
----
-## Primeros pasos: Hello Chat
+## First steps: Hello Chat
 
 ```Javascript
 var express = require("express"); //"loads" express framework library
@@ -186,7 +178,7 @@ var http = require('http').Server(app); //http server using app
 
 //what happens with a get request to our server?
 app.get('/', function(req, res) {
-	//this function is a magical callback
+	//this function is a magical callback executed when there is a request to /
 	//req is the request info, response is used to send our funny stuff
 	res.send("Hello Chat");
 });
@@ -199,22 +191,23 @@ http.listen(9090, function() {
 ```
 _server.js_
 
-**express**: Framework para la creación de servidores en Node.js
+**express**: Framework for servers with node.js   
+** http**: Standard node.js library
 
-¿Dónde está la librería express?
+¿Where is the express library?
 
 ???
 * **express**
-* callback
+* Callbacks
 
 ---
-## Primeros pasos: Instalando dependencias
-**npm** (_Node Package Manager_) nos permite gestionar nuestras aplicaciones de Node.js y sus dependencias
+## First steps: Installing dependencies
+With **npm** (_Node Package Manager_) we will manage our project and its dependencies
 
-¿Necesitamos express? ¿Tenemos un _package.json_?
+¿Do we need express? ¿Do we have a _package.json_?
 * `npm install --save express`
-	* npm install instalará express en _node_modules_ automáticamente
-	* La opción --save añadirá a _package.json_ la librería express como dependencia y su versión, lo que nos permitirá instalarlo con `npm install` cuando queramos
+	* npm install will install express under _node_modules_ automatically
+	* The option --save will add the express library to the _package.json_ file as a dependency, which will allow us to install it again just wil `npm install`   
 ```Json
 	 "dependencies": {
         "express": "^4.13.3"
@@ -222,25 +215,42 @@ _server.js_
 ```
 
 ---
-## Primeros pasos: Ejecutar el ejemplo
-* `node server.js` Ejecutará nuestro servidor de ejemplo:
+## First steps: Execute the example
+* `node server.js` will execute our code:
 ```
 	$ node server.js
 	Magic happens in port 9090
 ```
 
-* Desde cualquier navegador: `localhost:9090`    
+* From any browser: `localhost:9090`    
 	`Hello Chat`
 
 ----
-Ejecutar `node` nos permitirá acceder a un intérprete de Node.js, muy útil para probar cosas
+Executing `node` will open a node.js interpreter client, useful to try things
 
 ![](http://31.media.tumblr.com/fdb485348996efd348858229e1acdb78/tumblr_inline_nfi38oxoA81t547dw.png)
 
 ---
-## Servir un fichero Html
-**Vamos a darle más gracia a nuestra web!**     
-En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros "recursos")    
+## First steps
+### Npm lil' reference
+* `npm init`: Generates package.json 
+* `npm install`: Installs all package.json dependencies
+	* `npm install --save <package>`: Installs package and saves it as a dependency
+	* `npm install -g <package>`: Installs a package globally
+* `npm run <script>`: Executes the given script defined in package.json
+* `npm start`: Executes "start" script in in package.json
+* `npm test`: Executes script "test"
+* `npm remove <package>`: Removes installed package
+	* Options -g and --save also valid for remove
+
+-----
+Don't worry, this will not be on the final exam
+
+
+---
+## Serving a HTML file
+**Lets make a real webpage**     
+Under `public/` we will create an _index.html_ (remember that here we will add our resources)    
 
 ```html
 <!DOCTYPE html>
@@ -271,13 +281,13 @@ _index.html_
 ```
 
 ---
-## Servir un fichero Html
-* Para devolver los recursos de la carpeta public con express, añadimos:
+## Serving a HTML file
+* To serve all the files under public folder with express, simply add:
 ```javascript
 app.use(express.static('public'));
 ```
-* En el navegador: `localhost:9090/index.html` nos devolverá nuestro fichero html
-* En la función _app.get_ que creamos al principio podemos redireccionar a nuestro fichero cliente con `res.redirect('/index.html')`
+* In the browser: `localhost:9090/index.html` will return our html page
+* In the callback _app.get_ we could redirect to our page with `res.redirect('/index.html')`
 
 ```javascript
 //requires and stuff
@@ -291,26 +301,25 @@ app.get('/', function(req, res) {
 _server.js_
 
 ----
-~~`res.sendFile(...)`~~: Nos permite enviar un fichero, sin embargo, no nos permitirá enviar css,scripts o imagenes directamente
+~~`res.sendFile(...)`~~: Allows us to send a file directly, however, we won't hace access to any script, image or css file without a public folder
 
 ???
-* Con redirect, `localhost:9090/` nos llevará a `localhost:9090/index.html`
-* Probar ahora!
+* Now `localhost:9090/`  will take us to`localhost:9090/index.html`
+* Try now
 
 ---
 class:center
-Bien, tenemos un servidor web, pero ahora como hacemos un servicio de chat?
+Now we have a web server, but, How do we build a chat service?
 
 ![Scared Koala Here](images/scared_koala.png)
 
 ---
-## Websockets con Socket.io
-Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidireccional entre cliente y servidor y con menos sobrecarga que las peticiones http.
+## Websockets using Socket.io
+Websockets allow us to send bidirectional messages in real time between client and server more efficiently that plain http request
 
 <center>
 <img src="images/websocket.png" alt="Websocket diagram"></br>
-Diagrama de WebSocket</br>
-www.pubnub.com/blog/2015-01-05-websockets-vs-rest-api-understanding-the-difference/
+WebSocket diagram (www.pubnub.com)
 </center>
 
 ???
@@ -318,56 +327,60 @@ Usa estándares y puerto 80 (bueno para evitar firewalls)
 
 ---
 ## Socket.io
-Es basado en eventos, con dos métodos principales:
+Based on events, with two main methods:
 
-* **On**: Asignará un callback (esas cosas chulas) a un determinado evento, el callback se ejecutará cuando recibamos un evento (mensaje) determinado
-	* `socket.on('mi_mensaje',callback)`
+* **On**: Will assign a callback to a certain event, the callback will be executed when we received the event (message)
+	* `socket.on('my_message',callback)`
 
 
-* **Emit**: Enviará un mensaje (evento) determinado, opcionalmente se podrá añadir un contenido (string,json,...)
-	* `socket.emit('mi_mensaje','contenido')`
-	* Con `socket.send('contenido')` realizamos la misma acción, sin embargo el evento disparado será siempre _'message'_
+* **Emit**: Will send a message (event), we can also add a content (string,json,...)
+	* `socket.emit('mi_message','content')`
+	* With `socket.send('content')` we will send an event _'message'_ automatically
 
 ----
-Socket.io nos permite enviar mensajes uno a uno, así como broadcasting (entre otras muchas opciones)
+Socket.io allows one-to-one messages and broadcasting among other options
 
 ???
-Opciones de socket.io:
 * Namespaces, rooms
-* Mensajes con ACK
+* Message with ACK
 
 ---
 
-## Socket.io - Eventos
-Podemos asignar los eventos que queramos a nuestros mensajes, sin embargo, socket.io proporciona algunos eventos por defecto:
+## Socket.io - Events
+We can assign any event to our messages, but socket.io provides certain events by default:
 
-* **message:** Evento de los mensajes por defecto al ejecutar `socket.send`
-
-
-* **connection/connect:** Evento que se ejecutará en la conexión exitosa de un socket
-	* En el cliente el evento es **connect**
+* **message:** Default event for our messages with `socket.send`
 
 
-* **disconnect:** Evento que se ejecutará en la desconexión de un socket
+* **connection/connect:** Automatically fired when a socket connects
+	* In the client always use **connect**
+
+* **disconnect:** Fired when a socket disconnects
 
 ----
-Hay más eventos como `reconnect` o `error` entre otros
+There are more events such as `reconnect` or `error` among others
 
 ---
-## Socket.io en el servidor
+## Server-side Socket.io
 
-En primer lugar, necesitaremos la librería 'socket.io', por lo que la incluiremos al igual que hicimos con express:
-1. `$ npm install --save socket.io` para descargar e instalar socket.io en el proyecto
+First, we need 'socket.io' library, so we repeat the same steps as with express:
+1. `$ npm install --save socket.io` to download and install socket.io
 ```js
 	  "dependencies": {
       "express": "^4.13.3",
       "socket.io": "^1.3.7"
 	  }
 ```
-2. `var io=require('socket.io')(http)` al comienzo de _server.js_, con esto asignamos los websockets a nuestro servidor http
+2. `var io=require('socket.io')(http)` at the beginning of _server.js_, to assign websockets to our http
 
+```js
+var express = require("express"); //"loads" express framework library
+var app = express(); //new express app (some magic here)
+var http = require('http').Server(app); //http server using app
+var io = require('socket.io')(http); //attach out socket.io to our server
+```
 ---
-## Socket.io en el servidor
+## Server-side Socket.io
 
 ```js
 //When a socket connects
@@ -384,27 +397,31 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
 	});
 });
 ```
+_Basic Socket.io setup_
 
 ???
-* Importante, });
+* Important! });
 
 ---
-## Socket.io en el servidor
+## Server-side Socket.io
 
-1. `io.on('connection',function(socket)...` Este evento se disparará cuando cualquier socket se conecte, el callback (function) recibe el socket conectado como argumento, el resto de eventos se encuentran dentro del callback
+1. `io.on('connection',function(socket)...` This event will fire with any socket connection. The callback receives the socket as argument. The rest of events are attached to given socket inside the callback
 
-2. `socket.on('msg',function(content)...` Evento asignado al socket conectado, el callback contiene el contenido como argumento, se ejecutará al recibir un mensaje
-	* 'msg' es un evento personalizado, solo se disparará con mensajes con dicho evento!
+2. `socket.on('msg',function(content)...` Socket fired when an event `msg` is received. 
+	* 'msg' is a custom event, it will only fired with messages labeled that way!
 
-3. `socket.on('disconnect', function ()...` Evento asignado a la desconexión del socket, nos informará de que se ha desconectado y nos permitirá actualizar la información necesaria
+3. `socket.on('disconnect', function ()...` Event fired when socket disconnects. It will allow us to update any necessary information
+
+???
+Javascript scopes
 
 ---
-## Socket.io en el cliente
-Tenemos unos websockets y eventos muy chulos en el servidor, ahora toca conectarlos a algo, es decir, un cliente
+## Client-side Socket.io
+We will need to connect our fancy sockets to something (a client)
 
-Por suerte, el cliente (web) también ejecutara _Javascript_, por tanto, programar con Socket.io en el cliente es igual
+Luckily, out web client also runs with _Javascript_ so programming with Socket.io is similar
 
-* Lo primero (de nuevo), es conseguir la librería de algún sitio (recordemos que ahora estaremos programando el "cliente web", que se ejecutará en otro ordenador), por suerte, nuestro servidor ya está configurado por defecto para proveer este cliente, por lo que añadimos en index.html:
+* First (again), is getting the library, luckily, our server is already configured by default to provide this client by adding to the index.html:
 ```html
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -414,13 +431,13 @@ _index.html_
 
 
 ???
-* También es posible proveer manualmente el cliente, o descargarlo desde el repositorio oficial
+* It is also possible to provide the client manually or downloading from any other repository
 
-Además de socket.io-client para javascript, existen multitud de librerías cliente de websockets para Java, Android, Unity... compatibles con nuestro chat
+There are also a lot of socket-io and websockets libraries for Java, Android etc... fully compatible
 
 ---
-## Socket.io en el cliente
-Ahora programaremos el cliente con Javascript, para tener todo limpio y ordenado, crearemos un archivo **chat.js** en _public/js/_ y lo cargaremos en index.html:
+## Client-side Socket.io
+Now lets code our client, lets keep everything tidy by creating a new file **chat.js** under _public/js/_ and loading in index.html:
 
 ```html
 <!-- body code-->
@@ -446,28 +463,28 @@ _chat.js_
 * socket on(connect vs connection)
 
 ---
-## Socket.io en el cliente
-**Probemos!**
-1. `node server.js` para levantar el servidor
-2. `localhost:9090` en nuestro navegador.
+## Client-side Socket.io
+**Lets try!**
+1. `node server.js` to start our server
+2. `localhost:9090` in our browser.
 
-En el navegador veremos nuestra web y una alerta que dirá "Connected".
-En el server:
+We will see our web and an alert in our browser saying "Connected".
+In the server:
 ```
 Magic happens in port 9090
 User connected
 ```
 
 ----
-Notemos que si recargamos la página o abrimos otra, otro "usuario" se conectará, si desconectamos el server (Ctrl+C) y lo volvemos a conectar, veremos que se nos conecta automáticamente un usuario y nos saldrá otra vez la alerta
+If we reload the page or open another, other "user" will connect, if we shut the server (Ctrl+C) and connect again, the user will connect automatically and another alert will appear.
 
 ???
-* Reconexión automática!!
-* No es necesario reiniciar servidor cuando modificamos el cliente (es un recurso)
+* Automatic reconnection
+* We don't need to restart the client when modifying the client (it's a resource)
 
 ---
-## Socket.io en el cliente
-Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a una aplicación de chat:
+## Client-side Socket.io
+We can connect now!!, we need to make this web to look like a chat application:
 ```html
 <!DOCTYPE html>
 <html>
@@ -476,7 +493,7 @@ Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a 
     <title>MyChat</title>
 </head>
 <body>
-  <center> <!-- Not good, i know -->
+  <center> <!-- Not good, I know -->
   <h1>My Chat</h1>
   <p>Node Wizardry</p>
   <p id="chat"></p> <!-- Chat messages are shown here -->
@@ -494,18 +511,18 @@ Ya podemos conectarnos!!, ahora necesitamos que esta web se parezca (un poco) a 
 _index.html_
 
 ---
-## Socket.io en el cliente
+## Client-side Socket.io
 
 <center>
     <img src="images/mychat_screen.png" alt="MyChat Screenshot">
 
 </center>
-_Screenshot de MyChat_
+_MyChat screenshot_
 
 ---
-## Socket.io en el cliente
-Ya tenemos el layout, ahora, volvemos a nuestro chat.js e implementamos los eventos y funcionalidades que faltan:
-* **Recibir mensaje**: Crearemos un evento (por ejemplo _receive_) para la recepción de un mensaje, el evento contendrá como contenido el mensaje, que debemos mostrar en nuestro html (usando el DOM)
+## Client-side Socket.io
+The layout is ready, now we will code the event handling and interactions in chat.js:
+* **Receive message**: We create a new event (e.g. _receive_) for when receiving a message, this event will contain the message, which we will display on our html page (using DOM)
 ```javascript
 //On message receive (custom event)
 socket.on('receive', function(msg) { //msg is the content
@@ -514,7 +531,7 @@ socket.on('receive', function(msg) { //msg is the content
     chatobj.innerHTML=chatobj.innerHTML+'</br>'+msg;
 });
 ```
-* **Desconexión:** Avisaremos al usuario que se ha desconectado
+* **Disconnection:** We will alert the user that he has disconnected from the chat
 ```javascript
 //On disconnection
 socket.on('disconnect', function() {
