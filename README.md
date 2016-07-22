@@ -12,6 +12,5 @@ Charla y otras cosas bajo **Licencia CC-by-sa**
 * [Alpha-bug](https://github.com/Alpha-Bug)
 
 -----
-
-Web Oficial: <http://demiurgosoft.github.io/brujeria-con-node/>  
-Presentación Online: <https://rawgit.com/demiurgosoft/brujeria-con-node/master/index.html>
+ 
+Presentación Online: <https://rawgit.com/demiurgosoft/node-wizardry/master/index.html>
