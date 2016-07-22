@@ -58,7 +58,8 @@ count:false
 count:false
 * ### Asíncrono (a.k.a. callback hell)
 	* Eliminar esperas I/O y aprovechar recursos (non-blocking)
-
+    * Perfecto para aplicaciones a tiempo real
+    
 ---
 class: center,middle
 ![Async vs sync](images/sync_async.png)
@@ -70,36 +71,40 @@ Async vs sync
 class:center,middle
 # Taller: MyChat
 _Small chat service_    
-<https://github.com/demiurgosoft/brujeria-con-node/>
+<https://github.com/demiurgosoft/node-wizardry/example/mychat>
 ---
 ## MyChat
-Consiste en un sencillo servicio de webchat, con un espacio único para un chat común a tiempo real y plataforma web.
+Una sencilla aplicación de chat estilo IRC, con un espacio de chat común en una plataforma web.
 
 Crearemos una web sencilla usando _node.js_ con el framework _express_, y aprenderemos a manejar websockets con el módulo _socket.io_ para el servicio de chat, además veremos como gestionar nuestro proyecto con _npm_
 
-_Basado en el tutorial oficial de **Socket.io**: <http://socket.io/get-started/chat/>_
+_Basado en el tutorial oficial de **Socket.io**: <http://socket.io/get-started/chat>_
 
 ---
 ## Primeros pasos
 **Instalar node (debian/ubuntu)**
-* **Version 0.12**
+* **Version antigua**
 	* `sudo apt-get install nodejs`
 
-* **Version 4.2.2 (LTS)**
+* **Version 4 (LTS)**
 	* `curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -`    
 	* `sudo apt-get install -y nodejs`
 
-**Windows (4.2.2)**
+**Windows**
 Descargar instalador:
-* 4.2.2 (LTS): <https://nodejs.org/en/download/>
+* Versión 4 (LTS): <https://nodejs.org/en/download>
 
->Más opciones en <https://nodejs.org/en/download/package-manager/>
+>Más opciones en <https://nodejs.org/en/download/package-manager>
 
 ----
 
-* `node --version`
+* `node --version` para comprobar la versión
 
-* Si npm no se encuentra instalado `sudo apt-get install npm`
+???
+
+* El paquete nvm nos permitirá usar distintas versiones de node
+
+* Usaremos terminal tanto en Windows como Linux
 
 ---
 ## Primeros pasos
@@ -115,15 +120,15 @@ Descargar instalador:
 	|-server.js
 	|-README.md
 	|-app/
-		|-"funny code here"
+		|-"awesome code"
 	|-config/
-		|-"boring code here"
+		|-"configuration files"
 	|-node_modules/
 		|-"dependencies"
 	|-test/
-		|-"testing code here"
+		|-"testing code"
 	|-public/
-		|-"server resources here"
+		|-"server resources"
 ```
 _Ejemplo de un proyecto en Node.js_
 
@@ -161,22 +166,7 @@ _Ejemplo de package.json_
 ???
 package.json
 ---
-## Primeros pasos
-### Npm lil' reference
-* `npm init`: crea un package.json 
-* `npm install`: instala las dependencias del package.json presente
-	* `npm install --save <package>`: instala paquete y lo guarda como dependencia
-	* `npm install -g <package>`: Instala paquete de forma global al sistema
-* `npm run <script>`: Ejecuta un comando en script (mirar json)
-* `npm start`: Ejecuta el comando de script "start"
-* `npm test`: Ejecuta comando de script "test"
-* `npm remove <package>`: Elimina paquete instalado
-	* Opciones -g y --save igual que en install
 
------
-Tranquilos, no cae en el examen
-
----
 ## Primeros pasos: Hello Chat
 
 ```Javascript
@@ -186,7 +176,7 @@ var http = require('http').Server(app); //http server using app
 
 //what happens with a get request to our server?
 app.get('/', function(req, res) {
-	//this function is a magical callback
+	//this function is a magical callback executed when there is a request to /
 	//req is the request info, response is used to send our funny stuff
 	res.send("Hello Chat");
 });
@@ -199,7 +189,8 @@ http.listen(9090, function() {
 ```
 _server.js_
 
-**express**: Framework para la creación de servidores en Node.js
+**express**: Framework para la creación de servidores en Node.js   
+**http**: Librería estándar para conexión http
 
 ¿Dónde está la librería express?
 
@@ -238,6 +229,22 @@ Ejecutar `node` nos permitirá acceder a un intérprete de Node.js, muy útil pa
 ![](http://31.media.tumblr.com/fdb485348996efd348858229e1acdb78/tumblr_inline_nfi38oxoA81t547dw.png)
 
 ---
+## Primeros pasos
+### Npm lil' reference
+* `npm init`: crea un package.json 
+* `npm install`: instala las dependencias del package.json presente
+	* `npm install --save <package>`: instala paquete y lo guarda como dependencia
+	* `npm install -g <package>`: Instala paquete de forma global al sistema
+* `npm run <script>`: Ejecuta un comando en script (mirar json)
+* `npm start`: Ejecuta el comando de script "start"
+* `npm test`: Ejecuta comando de script "test"
+* `npm remove <package>`: Elimina paquete instalado
+	* Opciones -g y --save igual que en install
+
+-----
+Tranquilos, no cae en el examen
+---
+
 ## Servir un fichero Html
 **Vamos a darle más gracia a nuestra web!**     
 En `public/` crearemos un fichero _index.html_ (recordemos que ahí van nuestros "recursos")    
@@ -309,8 +316,7 @@ Los websockets nos permitirán mandar mensajes a tiempo real, de forma bidirecci
 
 <center>
 <img src="images/websocket.png" alt="Websocket diagram"></br>
-Diagrama de WebSocket</br>
-www.pubnub.com/blog/2015-01-05-websockets-vs-rest-api-understanding-the-difference/
+Diagrama de Websockets (www.pubnub.com)
 </center>
 
 ???
@@ -366,6 +372,13 @@ En primer lugar, necesitaremos la librería 'socket.io', por lo que la incluirem
 ```
 2. `var io=require('socket.io')(http)` al comienzo de _server.js_, con esto asignamos los websockets a nuestro servidor http
 
+```js
+var express = require("express"); //"loads" express framework library
+var app = express(); //new express app (some magic here)
+var http = require('http').Server(app); //http server using app
+var io = require('socket.io')(http); //attach out socket.io to our server
+```
+
 ---
 ## Socket.io en el servidor
 
@@ -384,6 +397,7 @@ io.on('connection', function (socket) { //the callback arg is the connected sock
 	});
 });
 ```
+_Configuración básica de socket.io_
 
 ???
 * Importante, });
@@ -574,7 +588,9 @@ El servidor recibe el mensaje y lo muestra, sin embargo, no le hemos dicho nunca
 Probar a desconectar y reconectar el servidor
 --
 count:false
-![Scream](images/scream.png)
+<center>
+<img src="images/scream.png"></img>
+</center>
 
 ---
 ## Broadcasting de mensajes
@@ -608,10 +624,14 @@ Con estas pruebas se observa que socket.io es razonablemente robusto y rápido
 
 --
 count:false
-Come and see the world of Node.js     
-![Smashing](images/smash.jpg)
+<center>
+Come and see the world of Node.js</br>
+<img src="images/smash.jpg"></img>
+</center>
 
-Módulos npm para explorar: <https://www.npmjs.com/>
+* NPM modules to explore: <https://www.npmjs.com>
+* Check these slides: <https://github.com/demiurgosoft/node-wizardry>
+
 
 ---
 class: middle,center
