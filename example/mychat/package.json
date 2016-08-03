@@ -7,16 +7,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "demiurgosoft <demiurgosoft@hotmail.com>",
+  "author": "angrykoala <angrykoala@outlook.es>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/demiurgosoft/brujeria-con-node.git"
+    "url": "git+https://github.com/angrykoala/brujeria-con-node.git"
   },
   "bugs": {
-    "url": "https://github.com/demiurgosoft/brujeria-con-node/issues"
+    "url": "https://github.com/angrykoala/brujeria-con-node/issues"
   },
-  "homepage": "https://github.com/demiurgosoft/brujeria-con-node#readme",
+  "homepage": "https://github.com/angrykoala/brujeria-con-node#readme",
   "dependencies": {
     "express": "^4.14.0",
     "socket.io": "^1.4.8"

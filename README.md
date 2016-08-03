@@ -1,6 +1,6 @@
 Brujeria con Node.js
 ====================
-_by @demiurgosoft_  
+_by @angrykoala_  
 Charla-Taller de Node.js con implementación de un servicio de chat _MyChat_
 
 Todo el código se encuentra bajo una **Licencia MIT**  
@@ -13,4 +13,4 @@ Charla y otras cosas bajo **Licencia CC-by-sa**
 
 -----
  
-Presentación Online: <https://rawgit.com/demiurgosoft/node-wizardry/master/index.html>
+Presentación Online: <https://rawgit.com/angrykoala/node-wizardry/master/index.html>
