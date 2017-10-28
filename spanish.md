@@ -1,23 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Brujería con Node.js</title>
-    <meta charset="utf-8">
-    <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-      body { font-family: 'Droid Serif','Ubuntu'; }
-      h1, h2, h3 {
-        font-family: 'Yanone Kaffeesatz','Ubuntu';
-        font-weight: normal;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
-  </head>
-  <body>
-    <textarea id="source">
 class: center,middle
 Brujería con Node.js
 ====================
@@ -637,12 +617,3 @@ Come and see the world of Node.js</br>
 class: middle,center
 # Fin
 ![Guinness Koala](images/guinness.jpg)
-<!-- FIN DE PRESENTACION -->
-    </textarea>
-    <script src="./remark.js">
-    </script>
-    <script>
-      var slideshow = remark.create();
-    </script>
-  </body>
-</html>
