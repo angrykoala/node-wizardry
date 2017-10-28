@@ -1,0 +1,25 @@
+{
+  "name": "node-wizardry",
+  "version": "0.0.2",
+  "description": "Node.js Wizardry",
+  "main": "index.md",
+  "dependencies": {
+    "yamp": "^0.4.3"
+  },
+  "scripts": {
+    "generate": "yamp index.md english.md -t 'Node Wizardry' --remark --style main.css -k && yamp spanish.md -t 'Brujería con Node.js' --remark --style main.css -k",
+    "clean": "rm -rf node_modules package-lock.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angrykoala/node-wizardry.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "tutorial"
+  ],
+  "author": "angrykoala <angrykoala@outlook.es>",
+  "license": "MIT",
+  "homepage": "https://rawgit.com/angrykoala/node-wizardry/master/index.html#1"
+}
