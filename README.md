@@ -1,4 +1,4 @@
-Brujeria con Node.js
+Brujería con Node.js
 ====================
 _by @angrykoala_  
 Charla-Taller de Node.js con implementación de un servicio de chat _MyChat_
